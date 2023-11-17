@@ -5,7 +5,7 @@ import { SketchPicker } from 'react-color';
 const DrawingCanvas = () => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [lineLength, setLineLength] = useState(0);
-  const [color, setColor] = useState('#000000');
+  const [color, setColor] = useState('#FF0000');
   const [penWidth, setPenWidth] = useState(2);
 
   const initializeCanvas = () => {
