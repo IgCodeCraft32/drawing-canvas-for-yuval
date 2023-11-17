@@ -1,24 +1,26 @@
 'use client'
-// components/DrawingCanvas.js
-import React from 'react';
-import dynamic from 'next/dynamic';
-
-const SketchPicker = dynamic(() => import('react-color').then((module) => module.SketchPicker), {
-  ssr: false,
-});
-
-let isDrawing = false;
-let lineLength = 0;
-let color = '#000000';
-let penWidth = 2;
+import React, { useEffect, useState } from 'react';
+import { SketchPicker } from 'react-color';
 
 const DrawingCanvas = () => {
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [lineLength, setLineLength] = useState(0);
+  const [color, setColor] = useState('#000000');
+  const [penWidth, setPenWidth] = useState(2);
+
   const initializeCanvas = () => {
     const canvas = document.getElementById('drawingCanvas');
     const ctx = canvas.getContext('2d');
 
+    canvas.style.cursor = 'crosshair';
+
+    const marker = new Image();
+    marker.src = '/pointer_1538.png'; // Replace with the actual path to your image
+    
+    const markerSize = 20;
+
     const startDrawing = (e) => {
-      isDrawing = true;
+      setIsDrawing(true);
       ctx.beginPath();
       ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
       ctx.strokeStyle = color;
@@ -28,22 +30,29 @@ const DrawingCanvas = () => {
     const draw = (e) => {
       if (!isDrawing) return;
 
-      ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+      const x = e.clientX - canvas.offsetLeft;
+      const y = e.clientY - canvas.offsetTop;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+      ctx.drawImage(marker, x - markerSize / 2, y - markerSize / 2, markerSize, markerSize);
+
+      ctx.lineTo(x, y);
       ctx.stroke();
 
-      lineLength += Math.sqrt(Math.pow(e.movementX, 2) + Math.pow(e.movementY, 2));
+      // Update the line length
+      setLineLength((prevLength) => prevLength + Math.sqrt(Math.pow(e.movementX, 2) + Math.pow(e.movementY, 2)));
 
       if (lineLength >= 300) {
         document.getElementById('submitBtn').style.display = 'block';
       }
     };
-
+    
     const stopDrawing = () => {
-      isDrawing = false;
+      setIsDrawing(false);
+      ctx.clearRect(0, 0, canvas.width, canvas.height); 
     };
 
     const checkLineLength = () => {
-      // Check line length on mouse re-enter
       if (lineLength >= 300) {
         document.getElementById('submitBtn').style.display = 'block';
       }
@@ -65,7 +74,7 @@ const DrawingCanvas = () => {
   };
 
   const handleColorChange = (newColor) => {
-    color = newColor.hex;
+    setColor(newColor.hex);
   };
 
   const submitDrawing = () => {
@@ -79,9 +88,9 @@ const DrawingCanvas = () => {
   };
 
   // Initialize the canvas on component mount
-  React.useEffect(() => {
+  useEffect(() => {
     initializeCanvas();
-  }, []);
+  }, [color, isDrawing, lineLength, penWidth]);
 
   return (
     <div>
@@ -99,7 +108,7 @@ const DrawingCanvas = () => {
           id="penWidth"
           value={penWidth}
           min="1"
-          onChange={(e) => (penWidth = e.target.value)}
+          onChange={(e) => setPenWidth(e.target.value)}
         />
       </div>
       <button id="submitBtn" onClick={submitDrawing}>
@@ -110,4 +119,3 @@ const DrawingCanvas = () => {
 };
 
 export default DrawingCanvas;
- 
