@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+canvas{
+  border: 1px solid 
+}
+
+/* styles/globals.css */
+
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #ffe5b4; /* Light yellow background for a cartoonish feel */
+}
+
+#options {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+label {
+  font-family: 'Comic Sans MS', cursive, sans-serif; /* Use a cartoonish font */
+  color: #ff6347; /* Tomato red color for labels */
+  margin-right: 10px;
+}
+
+#colorPicker {
+  margin-right: 10px;
+}
+
+#penWidth {
+  margin-right: 10px;
+}
+
+canvas {
+  border: 2px solid #000;
+}
+
+#submitBtn {
+  display: none;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #4caf50; /* Green color for the submit button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Comic Sans MS', cursive, sans-serif; /* Use the same cartoonish font */
+}
+
+#submitBtn:hover {
+  background-color: #45a049; /* Darker green color on hover for a subtle effect */
+}
