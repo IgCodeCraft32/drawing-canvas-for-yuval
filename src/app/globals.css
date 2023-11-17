@@ -18,18 +18,15 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
   margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   background-color: #ffe5b4; /* Light yellow background for a cartoonish feel */
+  background-image: url("/border-template-with-happy-kids-circle_1308-72016.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 #options {
@@ -53,13 +50,12 @@ label {
 }
 
 canvas {
-  border: 2px solid;
+  border: 2px solid lightgray;
   background: white;
   cursor: url('/pointer_1538.png'), auto;
 }
 
 #submitBtn {
-  display: none;
   margin-top: 10px;
   padding: 10px;
   background-color: #4caf50; /* Green color for the submit button */
